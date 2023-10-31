@@ -25,6 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "npm test -- --ci --watchAll false",
+    "test:e2e": "start-server-and-test start http://localhost:3000 & cypress run",
+    "test:e2e:open": "start-server-and-test start http://localhost:3000 & cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^13.4.0"
   }
 }
