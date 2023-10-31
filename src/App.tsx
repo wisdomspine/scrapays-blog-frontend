@@ -1,7 +1,8 @@
-import { ChakraProvider, theme } from "@chakra-ui/react";
-import { TestButton } from "@components/test-button/test-button";
+import { ChakraBaseProvider } from "@chakra-ui/react";
+import { AppRouter } from "app/router";
+import { theme } from "theme";
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    <TestButton>Hello world 2</TestButton>
-  </ChakraProvider>
+  <ChakraBaseProvider theme={theme}>
+    <AppRouter></AppRouter>
+  </ChakraBaseProvider>
 );

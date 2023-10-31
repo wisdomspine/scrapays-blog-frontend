@@ -22,9 +22,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "test:ci": "npm test -- --ci --watchAll false",
     "test:e2e": "npm start & wait-on http://localhost:3000 & cypress run",
     "test:e2e:open": "npm start & wait-on http://localhost:3000 & cypress open",
@@ -46,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
     "cypress": "^13.4.0"
   }
 }

@@ -1,4 +1,4 @@
-import { render } from "./test-utils";
+import { render } from "./app/utils/test";
 import { App } from "./App";
 
 test("This is a demo test", () => {
