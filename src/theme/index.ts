@@ -16,5 +16,8 @@ export const theme = extendBaseTheme({
     Spinner: defaultTheme.components.Spinner,
     Alert: defaultTheme.components.Alert,
     Modal: defaultTheme.components.Modal,
+    FormError: defaultTheme.components.FormError,
+    FormLabel: defaultTheme.components.FormLabel,
+    Textarea: defaultTheme.components.Textarea,
   },
 });

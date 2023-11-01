@@ -1,5 +1,6 @@
 import { BooksPage } from "app/routes/books/books-page";
 import { LoginPage } from "app/routes/login/login-page";
+import { NewBookPage } from "app/routes/new-book/new-book-page";
 import {
   RouteObject,
   RouterProvider,
@@ -13,6 +14,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "new",
+        Component: NewBookPage,
       },
       {
         path: ":id/edit",

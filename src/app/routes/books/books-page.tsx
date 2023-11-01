@@ -16,9 +16,14 @@ import { ConfirmAction } from "app/components/confirm-action/confirm-action";
 import { EmptyState } from "app/components/empty-state/empty-state";
 import { Page } from "app/components/page/page";
 import React, { useRef } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export function BooksPage(props: React.PropsWithChildren) {
+  const navigate = useNavigate();
+
+  const newBookHandler = () => {
+    navigate("/new");
+  };
   const {
     isOpen: isConfirmingSignOut,
     onOpen: onConfirmSignOut,
@@ -101,11 +106,13 @@ export function BooksPage(props: React.PropsWithChildren) {
         pr="8"
         pl="8"
         data-testid="new-book-button"
+        onClick={newBookHandler}
       >
         New Book
       </Button>
     </EmptyState>
   );
+
   return (
     <Page
       display="flex"
@@ -116,7 +123,7 @@ export function BooksPage(props: React.PropsWithChildren) {
       {/* Header */}
       <BookSearchBar
         onSearch={(query) => {}}
-        onNew={() => {}}
+        onNew={newBookHandler}
         onLogout={onConfirmSignOut}
         position="fixed"
         width="100%"

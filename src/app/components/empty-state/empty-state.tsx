@@ -21,11 +21,13 @@ export function EmptyState({
           {title}{" "}
         </Heading>
       )}
-      {typeof title !== "string" && typeof title != undefined && title}
+      {typeof title !== "string" && typeof title !== "undefined" && title}
 
       {/* subtitle */}
       {typeof subtitle === "string" && <Text> {subtitle} </Text>}
-      {typeof subtitle !== "string" && typeof subtitle != undefined && subtitle}
+      {typeof subtitle !== "string" &&
+        typeof subtitle !== "undefined" &&
+        subtitle}
     </Box>
   );
   return (
