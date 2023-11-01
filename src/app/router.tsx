@@ -1,4 +1,5 @@
 import { BooksPage } from "app/routes/books/books-page";
+import { EditBookPage } from "app/routes/edit-book/edit-book-page";
 import { LoginPage } from "app/routes/login/login-page";
 import { NewBookPage } from "app/routes/new-book/new-book-page";
 import {
@@ -18,6 +19,7 @@ const routes: RouteObject[] = [
       },
       {
         path: ":id/edit",
+        Component: EditBookPage,
       },
     ],
   },

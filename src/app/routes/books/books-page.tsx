@@ -24,6 +24,9 @@ export function BooksPage(props: React.PropsWithChildren) {
   const newBookHandler = () => {
     navigate("/new");
   };
+  const editBookHandler = (id: string) => {
+    navigate(`${id}/edit`);
+  };
   const {
     isOpen: isConfirmingSignOut,
     onOpen: onConfirmSignOut,
@@ -149,7 +152,9 @@ export function BooksPage(props: React.PropsWithChildren) {
                 title="The agony of tom sawer"
                 description="random description"
                 onDelete={onConfirmDelete}
-                onEdit={() => {}}
+                onEdit={() => {
+                  editBookHandler("1");
+                }}
               ></BookRow>
             </Tbody>
           </Table>
