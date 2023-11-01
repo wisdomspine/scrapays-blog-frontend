@@ -9,5 +9,8 @@ export const theme = extendBaseTheme({
     Button: defaultTheme.components.Button,
     Card: defaultTheme.components.Card,
     Heading: defaultTheme.components.Heading,
+    Container: defaultTheme.components.Container,
+    Input: defaultTheme.components.Input,
+    Form: defaultTheme.components.Form,
   },
 });

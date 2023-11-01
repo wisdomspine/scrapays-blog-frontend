@@ -1,3 +1,4 @@
+import { BooksPage } from "app/routes/books/books-page";
 import { LoginPage } from "app/routes/login/login-page";
 import {
   RouteObject,
@@ -8,6 +9,7 @@ import {
 const routes: RouteObject[] = [
   {
     path: "",
+    Component: BooksPage,
   },
   {
     path: "login",
