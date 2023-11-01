@@ -18,7 +18,7 @@ jobs:
         run: npm run test
       - name: Run e2e tests
         run: npm run test:e2e
-      - run: npm ci && npm run build
+      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
