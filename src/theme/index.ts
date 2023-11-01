@@ -12,5 +12,9 @@ export const theme = extendBaseTheme({
     Container: defaultTheme.components.Container,
     Input: defaultTheme.components.Input,
     Form: defaultTheme.components.Form,
+    Table: defaultTheme.components.Table,
+    Spinner: defaultTheme.components.Spinner,
+    Alert: defaultTheme.components.Alert,
+    Modal: defaultTheme.components.Modal,
   },
 });

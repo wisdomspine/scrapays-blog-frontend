@@ -9,10 +9,12 @@ describe("Test Search Bar", () => {
   const query = "rough";
   let searchHandler: BookSearchBarProps["onSearch"];
   let newBookHandler: BookSearchBarProps["onNew"];
+  let logoutHandler: BookSearchBarProps["onLogout"];
 
   beforeEach(() => {
     searchHandler = jest.fn();
     newBookHandler = jest.fn();
+    logoutHandler = jest.fn();
   });
 
   afterEach(() => {
@@ -25,6 +27,7 @@ describe("Test Search Bar", () => {
         query={query}
         onNew={newBookHandler}
         onSearch={searchHandler}
+        onLogout={logoutHandler}
       />
     );
     const input = screen.getByTestId(inputId) as HTMLInputElement;
@@ -39,6 +42,7 @@ describe("Test Search Bar", () => {
         query={query}
         onNew={newBookHandler}
         onSearch={searchHandler}
+        onLogout={logoutHandler}
       />
     );
     const input = screen.getByTestId(inputId) as HTMLInputElement;
@@ -56,6 +60,7 @@ describe("Test Search Bar", () => {
         query={query}
         onNew={newBookHandler}
         onSearch={searchHandler}
+        onLogout={logoutHandler}
       />
     );
     const input = screen.getByTestId(inputId) as HTMLInputElement;
@@ -82,6 +87,7 @@ describe("Test Search Bar", () => {
         query={query}
         onNew={newBookHandler}
         onSearch={searchHandler}
+        onLogout={logoutHandler}
       />
     );
     const input = screen.getByTestId(inputId) as HTMLInputElement;

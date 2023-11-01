@@ -10,6 +10,14 @@ const routes: RouteObject[] = [
   {
     path: "",
     Component: BooksPage,
+    children: [
+      {
+        path: "new",
+      },
+      {
+        path: ":id/edit",
+      },
+    ],
   },
   {
     path: "login",

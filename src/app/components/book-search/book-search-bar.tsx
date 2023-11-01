@@ -10,18 +10,20 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { Logo } from "app/components/logo/logo";
+import { LogoutIcon } from "app/components/logout-icon/logout-icon";
 import { useRef } from "react";
-import { clearTimeout } from "timers";
 
 export interface BookSearchBarProps extends FlexProps {
   query?: string;
   onSearch: (query: string) => void;
   onNew: () => void;
+  onLogout: () => void;
 }
 export function BookSearchBar({
   query,
   onSearch,
   onNew,
+  onLogout,
   ...otherProps
 }: BookSearchBarProps) {
   const queryRef = useRef(query);
@@ -93,6 +95,15 @@ export function BookSearchBar({
           onClick={onNew}
           hideFrom="md"
           data-testid="new-book-icon"
+        ></IconButton>
+
+        {/* logout button */}
+        <IconButton
+          aria-label="Logout"
+          icon={<LogoutIcon />}
+          onClick={onLogout}
+          data-testid="logout-icon-button"
+          colorScheme="red"
         ></IconButton>
       </Flex>
     </Flex>
