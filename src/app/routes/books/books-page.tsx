@@ -89,6 +89,7 @@ export function BooksPage(props: React.PropsWithChildren) {
     />
   );
 
+  // eslint-disable-next-line
   const empty = (
     <EmptyState
       title="No books found"
