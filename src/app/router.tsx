@@ -1,3 +1,5 @@
+import { AuthenticatedRouteProvider } from "app/providers/authenticated-route-provider";
+import { NotAuthenticatedRouteProvider } from "app/providers/not-authenticated-route-provider";
 import { BooksPage } from "app/routes/books/books-page";
 import { EditBookPage } from "app/routes/edit-book/edit-book-page";
 import { LoginPage } from "app/routes/login/login-page";
@@ -11,7 +13,11 @@ import {
 const routes: RouteObject[] = [
   {
     path: "",
-    Component: BooksPage,
+    element: (
+      <AuthenticatedRouteProvider>
+        <BooksPage />
+      </AuthenticatedRouteProvider>
+    ),
     children: [
       {
         path: "new",
@@ -25,7 +31,11 @@ const routes: RouteObject[] = [
   },
   {
     path: "login",
-    Component: LoginPage,
+    element: (
+      <NotAuthenticatedRouteProvider>
+        <LoginPage />
+      </NotAuthenticatedRouteProvider>
+    ),
   },
 ];
 const router = createBrowserRouter(routes);

@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
   Button,
@@ -33,6 +34,7 @@ export function BooksPage(props: React.PropsWithChildren) {
     onClose: onConfirmSignOutClose,
   } = useDisclosure();
   const confirmSignOutCloseRef = useRef(null);
+  const { logout } = useAuth0();
 
   const {
     isOpen: isConfirmingDelete,
@@ -85,7 +87,10 @@ export function BooksPage(props: React.PropsWithChildren) {
         <Button
           variant="solid"
           colorScheme="red"
-          onClick={onConfirmSignOutClose}
+          onClick={() => {
+            onConfirmSignOutClose();
+            logout();
+          }}
         >
           Signout
         </Button>
