@@ -1,19 +1,51 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/react";
 import { BookFormModal } from "app/components/book-form-modal/book-form-modal";
+import { GET_BOOK } from "app/queries/get-book";
+import { GET_BOOKS } from "app/queries/get-books";
+import { UPDATE_BOOK } from "app/queries/update-book";
+import { Book } from "app/types";
 import { PropsWithChildren, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export function EditBookPage(props: PropsWithChildren) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [updateBook] = useMutation<{ create: Book }>(UPDATE_BOOK, {
+    refetchQueries: [GET_BOOKS],
+  });
+  const params = useParams();
+  const id = Number.parseInt(params.id!);
+  const { data } = useQuery<{ book: Book }>(GET_BOOK, {
+    variables: {
+      id,
+    },
+  });
+
   useEffect(() => {
     onOpen();
   });
+
+  const submitHandler = (title: string, description: string) => {
+    updateBook({
+      variables: {
+        id,
+        data: {
+          title,
+          description,
+        },
+      },
+    });
+  };
+  console.log(data?.book);
   return (
     <BookFormModal
-      title="The agony of Tom Sawer"
-      description="random description"
+      title={data?.book?.title}
+      description={data?.book?.description}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={() => {}}
+      onSubmit={({ title, description }) => {
+        submitHandler(title, description);
+      }}
     />
   );
 }

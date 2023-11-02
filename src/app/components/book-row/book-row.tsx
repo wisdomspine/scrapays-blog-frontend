@@ -2,7 +2,7 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ChakraProps, Flex, IconButton, Td, Tr } from "@chakra-ui/react";
 
 export interface BookRowProps extends ChakraProps {
-  sn: string;
+  sn: string | number;
   title: string;
   description: string;
   onDelete: () => void;

@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
@@ -16,18 +17,15 @@ import { BookSearchBar } from "app/components/book-search/book-search-bar";
 import { ConfirmAction } from "app/components/confirm-action/confirm-action";
 import { EmptyState } from "app/components/empty-state/empty-state";
 import { Page } from "app/components/page/page";
-import React, { useRef } from "react";
+import { DELETE_BOOK } from "app/queries/delete-book";
+import { GET_BOOKS } from "app/queries/get-books";
+import { Book } from "app/types";
+import React, { useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export function BooksPage(props: React.PropsWithChildren) {
   const navigate = useNavigate();
 
-  const newBookHandler = () => {
-    navigate("/new");
-  };
-  const editBookHandler = (id: string) => {
-    navigate(`${id}/edit`);
-  };
   const {
     isOpen: isConfirmingSignOut,
     onOpen: onConfirmSignOut,
@@ -35,6 +33,20 @@ export function BooksPage(props: React.PropsWithChildren) {
   } = useDisclosure();
   const confirmSignOutCloseRef = useRef(null);
   const { logout } = useAuth0();
+  const [query, setQuery] = useState("");
+  const { data } = useQuery<{ books: Book[] }>(GET_BOOKS, {
+    variables: {
+      s: query,
+    },
+  });
+  // { data: deleteMessage, error: deleteError }
+  const [deleteBook] = useMutation<{ delete: string }>(DELETE_BOOK, {
+    update: (cache, message, { variables }) => {
+      const id = cache.identify({ id: variables?.id, __typename: "Book" });
+      cache.evict({ id });
+      cache.gc();
+    },
+  });
 
   const {
     isOpen: isConfirmingDelete,
@@ -42,6 +54,18 @@ export function BooksPage(props: React.PropsWithChildren) {
     onClose: onConfirmDeleteClose,
   } = useDisclosure();
   const confirmDeleteCloseRef = useRef(null);
+  const bookToDeleteId = useRef<null | number>(null);
+
+  const newBookHandler = () => {
+    navigate("/new");
+  };
+  const editBookHandler = (id: string | number) => {
+    navigate(`${id}/edit`);
+  };
+
+  const deleteBookHandler = (id: number) => {
+    deleteBook({ variables: { id } });
+  };
 
   const confirmDelete = (
     <ConfirmAction
@@ -60,7 +84,11 @@ export function BooksPage(props: React.PropsWithChildren) {
         <Button
           variant="solid"
           colorScheme="red"
-          onClick={onConfirmDeleteClose}
+          onClick={() => {
+            onConfirmDeleteClose();
+            deleteBookHandler(bookToDeleteId.current!);
+            bookToDeleteId.current = null;
+          }}
         >
           Delete
         </Button>
@@ -120,7 +148,21 @@ export function BooksPage(props: React.PropsWithChildren) {
       </Button>
     </EmptyState>
   );
-
+  const rows = (data?.books ?? []).map(({ id, title, description }, index) => (
+    <BookRow
+      key={id}
+      sn={index + 1}
+      title={title}
+      description={description}
+      onDelete={() => {
+        bookToDeleteId.current = id;
+        onConfirmDelete();
+      }}
+      onEdit={() => {
+        editBookHandler(id);
+      }}
+    ></BookRow>
+  ));
   return (
     <Page
       display="flex"
@@ -130,7 +172,9 @@ export function BooksPage(props: React.PropsWithChildren) {
     >
       {/* Header */}
       <BookSearchBar
-        onSearch={(query) => {}}
+        onSearch={(query) => {
+          setQuery(query);
+        }}
         onNew={newBookHandler}
         onLogout={onConfirmSignOut}
         position="fixed"
@@ -151,17 +195,7 @@ export function BooksPage(props: React.PropsWithChildren) {
                 <Th>Action</Th>
               </Tr>
             </Thead>
-            <Tbody>
-              <BookRow
-                sn="1"
-                title="The agony of tom sawer"
-                description="random description"
-                onDelete={onConfirmDelete}
-                onEdit={() => {
-                  editBookHandler("1");
-                }}
-              ></BookRow>
-            </Tbody>
+            <Tbody>{rows}</Tbody>
           </Table>
         </TableContainer>
       </Box>
