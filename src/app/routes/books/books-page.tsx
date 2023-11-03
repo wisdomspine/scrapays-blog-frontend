@@ -137,7 +137,6 @@ export function BooksPage(props: React.PropsWithChildren) {
       subtitle="click the button below to create one"
     >
       <Button
-        hideBelow="md"
         colorScheme="brand"
         pr="8"
         pl="8"
