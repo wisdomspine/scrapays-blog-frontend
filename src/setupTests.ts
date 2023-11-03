@@ -22,3 +22,4 @@ global.matchMedia =
       })),
     };
   };
+window.crypto = { subtle: {} as unknown as any } as Crypto;
