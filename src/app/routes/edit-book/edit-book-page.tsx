@@ -36,7 +36,6 @@ export function EditBookPage(props: PropsWithChildren) {
       },
     });
   };
-  console.log(data?.book);
   return (
     <BookFormModal
       title={data?.book?.title}

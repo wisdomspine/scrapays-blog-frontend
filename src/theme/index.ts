@@ -19,5 +19,6 @@ export const theme = extendBaseTheme({
     FormError: defaultTheme.components.FormError,
     FormLabel: defaultTheme.components.FormLabel,
     Textarea: defaultTheme.components.Textarea,
+    Progress: defaultTheme.components.Progress,
   },
 });

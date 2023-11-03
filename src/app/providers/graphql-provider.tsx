@@ -1,9 +1,13 @@
 import {
   ApolloClient,
   ApolloProvider,
+  HttpLink,
   InMemoryCache,
+  from,
   gql,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { useAuth0 } from "@auth0/auth0-react";
 import { PropsWithChildren } from "react";
 
 const typeDefs = gql`
@@ -45,12 +49,28 @@ const typeDefs = gql`
     description: String!
   }
 `;
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_BASE_URL,
-  cache: new InMemoryCache(),
-  typeDefs,
-});
 
 export function GraphQLProvider({ children }: PropsWithChildren) {
+  const { getAccessTokenSilently } = useAuth0();
+  const httpLink = new HttpLink({
+    uri: process.env.REACT_APP_BASE_URL,
+  });
+  /**
+   * Authorization middleware for adding access tokens to our request
+   */
+  const authLink = setContext(async (operation, context) => {
+    const token = await getAccessTokenSilently();
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  });
+  const client = new ApolloClient({
+    link: from([authLink, httpLink]),
+    cache: new InMemoryCache(),
+    typeDefs,
+    credentials: "include",
+  });
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
