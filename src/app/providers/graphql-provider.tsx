@@ -7,7 +7,9 @@ import {
   gql,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useToast } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 
 const typeDefs = gql`
@@ -51,6 +53,7 @@ const typeDefs = gql`
 `;
 
 export function GraphQLProvider({ children }: PropsWithChildren) {
+  const toast = useToast();
   const { getAccessTokenSilently } = useAuth0();
   const httpLink = new HttpLink({
     uri: process.env.REACT_APP_BASE_URL,
@@ -66,8 +69,19 @@ export function GraphQLProvider({ children }: PropsWithChildren) {
       },
     };
   });
+
+  // error link, show toast of error
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, originalError }) => {
+        toast({ description: message, colorScheme: "red", title: "Error" });
+      });
+    if (networkError) {
+      toast({ description: networkError.message, colorScheme: "red" });
+    }
+  });
   const client = new ApolloClient({
-    link: from([authLink, httpLink]),
+    link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
     typeDefs,
     credentials: "include",

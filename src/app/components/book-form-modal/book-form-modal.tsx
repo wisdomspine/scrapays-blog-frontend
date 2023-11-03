@@ -141,9 +141,8 @@ export function BookFormModal({
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   placeholder="Describe the book"
-                >
-                  {description}
-                </Textarea>
+                  value={description}
+                />
                 <FormErrorMessage> {descriptionError} </FormErrorMessage>
               </FormControl>
             </Stack>

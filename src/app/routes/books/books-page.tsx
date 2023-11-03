@@ -56,6 +56,7 @@ export function BooksPage(props: React.PropsWithChildren) {
   const confirmDeleteCloseRef = useRef(null);
   const bookToDeleteId = useRef<null | number>(null);
 
+  const isEmpty = !data?.books?.length;
   const newBookHandler = () => {
     navigate("/new");
   };
@@ -130,7 +131,6 @@ export function BooksPage(props: React.PropsWithChildren) {
     />
   );
 
-  // eslint-disable-next-line
   const empty = (
     <EmptyState
       title="No books found"
@@ -185,19 +185,33 @@ export function BooksPage(props: React.PropsWithChildren) {
       ></BookSearchBar>
       {/* Body */}
       <Box bgColor="white" mt="72px" maxHeight="calc(100vh - 72px)">
-        <TableContainer>
-          <Table colorScheme="brand" size="lg" variant="striped">
-            <Thead>
-              <Tr>
-                <Th>S/N</Th>
-                <Th>Title</Th>
-                <Th>Description</Th>
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <Tbody>{rows}</Tbody>
-          </Table>
-        </TableContainer>
+        {!isEmpty && (
+          <TableContainer>
+            <Table colorScheme="brand" size="lg" variant="striped">
+              <Thead>
+                <Tr>
+                  <Th>S/N</Th>
+                  <Th>Title</Th>
+                  <Th>Description</Th>
+                  <Th>Action</Th>
+                </Tr>
+              </Thead>
+              <Tbody>{rows}</Tbody>
+            </Table>
+          </TableContainer>
+        )}
+
+        {isEmpty && (
+          <Box
+            height="calc(100vh - 80px)"
+            display="flex"
+            flexFlow="row"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {empty}
+          </Box>
+        )}
       </Box>
       {confirmSignOut}
       {confirmDelete}

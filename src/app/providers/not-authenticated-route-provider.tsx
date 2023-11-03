@@ -20,20 +20,20 @@ export function NotAuthenticatedRouteProvider({ children }: PropsWithChildren) {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   // shows and hide the screen loader
   useEffect(() => {
-    if (!isLoading) {
+    if (isLoading) {
       start();
     } else {
       stop();
     }
-  }, [isLoading]);
+  }, [isLoading, start, stop]);
   /**
    * Checks if a user is not authenticated
    * if not authenticated, show children
    * Note: the loading must be false
    */
-  return <>{!isAuthenticated && !isLoading && children}</>;
+  return <>{!isAuthenticated && children}</>;
 }
